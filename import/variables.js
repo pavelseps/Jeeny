@@ -1,4 +1,10 @@
-//program for work
+/**
+ * 
+ * Move your variables to import/variables.local.js
+ */
+
+
+//programs for work
 var programsForWork = [
     ["Test program", "C:\\myprogram.exe", false]
 ];

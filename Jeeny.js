@@ -19,7 +19,18 @@ function read(f) {
 function include(f) {
     eval.apply(global, [read(f)]);
 }
-include('./import/variables.js');
+
+
+/***
+ * Check default/local variable
+ */
+fs.access('.\\import\\variables.local.js', fs.F_OK, function(err) {
+    if (!err){
+        include('./import/variables.local.js');
+    }else{
+        include('./import/variables.js');
+    }
+});
 
 
 /**
