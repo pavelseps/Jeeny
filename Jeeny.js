@@ -64,6 +64,8 @@ var commandsList = [
  */
 
 function startJeeny(){
+    open = require('open');
+    ncp = require("copy-paste");
     JeenySays("Ahoj, co pak si přeješ?");
     rl.on('line', function(line) {
         mainCycle(line.toString().trim());
@@ -323,8 +325,6 @@ function fcWiki() {
  * Main
  */
 if(fs.existsSync("./node_modules")){
-    open = require('open');
-    ncp = require("copy-paste");
     startJeeny();
 }else{
     JeenySays("Vidím že ještě nemáš moduly pro node.js");
@@ -334,12 +334,9 @@ if(fs.existsSync("./node_modules")){
         rl.question('Přeješ si je doinstalovat: ', function(line) {
             if(line=="ano"){
                 JeenySays("Dobře, já je doinstaluji.");
-                cp.exec(".\\npm_install.bat", function () {
-                    JeenySays("Prosím pusť si mě znovu, už budu vpořádku fungovat.");
-                    setTimeout(function() {
-                        process.exit()
-                    }, 2500);
-                });
+                cp.execSync('npm install');
+                JeenySays("Nainstalováno, už můžu fungovat!");
+                startJeeny();
             }else if(line=="ne"){
                 JeenySays("Bez nich nemohu fungovat..");
                 fcKonec();
