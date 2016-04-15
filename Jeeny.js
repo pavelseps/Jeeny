@@ -55,6 +55,7 @@ var commandsList = [
     ["testuj prohlizece", "Jeeny otevře web ve všech prohlížečích", fcProhlizece],
     ["lorem ipsum", "Jeeny vloží do clipboardu část Lorem Ipsum textu", fcLorem],
     ["vhost", "Jeeny otevře soubory pro nastavení virtual hostu", fcVhost],
+    ["wiki", "Jeeny otevře Websta wiki", fcWiki],
     ["test", false, fcTest]
 ];
 
@@ -306,6 +307,9 @@ function fcVhost() {
     JeenySays("Otevírám soubor httpd-vhosts.");
     open(win_host);
     JeenySays("Otevírám složku s hosts.");
+}
+function fcWiki() {
+    open('http://wiki.websta.cz/');
 }
 
 /**
