@@ -3,15 +3,20 @@
  * 11.4.2016
  */
 
-const readline = require('readline');
-const fs = require('fs');
-const open = require('open');
-const rl = readline.createInterface(process.stdin, process.stdout);
-const cp = require("child_process");
-const ncp = require("copy-paste");
 
 /**
- * Include js vith variables
+ * Constant
+ */
+const readline = require('readline');
+const rl = readline.createInterface(process.stdin, process.stdout);
+const cp = require("child_process");
+const fs = require('fs');
+var open;
+var ncp;
+
+/**
+ * Include js with variables
+ * Check default/local variable
  */
 function read(f) {
     return fs.readFileSync(f).toString();
@@ -19,11 +24,6 @@ function read(f) {
 function include(f) {
     eval.apply(global, [read(f)]);
 }
-
-
-/***
- * Check default/local variable
- */
 fs.access('.\\import\\variables.local.js', fs.F_OK, function(err) {
     if (!err){
         include('./import/variables.local.js');
@@ -63,6 +63,12 @@ var commandsList = [
  * Functions for communication
  */
 
+function startJeeny(){
+    JeenySays("Ahoj, co pak si přeješ?");
+    rl.on('line', function(line) {
+        mainCycle(line.toString().trim());
+    });
+}
 function mainCycle(readedInput){
     if(validateInput(readedInput)){
         callCommand(readedInput);
@@ -310,12 +316,37 @@ function fcVhost() {
 }
 function fcWiki() {
     open('http://wiki.websta.cz/');
+    JeenySays("Otevírám Websta wiki.");
 }
 
 /**
  * Main
  */
-JeenySays("Ahoj, co pak si přeješ?");
-rl.on('line', function(line) {
-    mainCycle(line.toString().trim());
-});
+if(fs.existsSync("./node_modules")){
+    open = require('open');
+    ncp = require("copy-paste");
+    startJeeny();
+}else{
+    JeenySays("Vidím že ještě nemáš moduly pro node.js");
+    askNodeModules();
+
+    function askNodeModules() {
+        rl.question('Přeješ si je doinstalovat: ', function(line) {
+            if(line=="ano"){
+                JeenySays("Dobře, já je doinstaluji.");
+                cp.exec(".\\npm_install.bat", function () {
+                    JeenySays("Prosím pusť si mě znovu, už budu vpořádku fungovat.");
+                    setTimeout(function() {
+                        process.exit()
+                    }, 2500);
+                });
+            }else if(line=="ne"){
+                JeenySays("Bez nich nemohu fungovat..");
+                fcKonec();
+            }else{
+                JeenySays("Prosím, odpověz ano/ne");
+                askNodeModules();
+            }
+        });
+    }
+}
