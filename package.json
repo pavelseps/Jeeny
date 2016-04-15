@@ -1,0 +1,24 @@
+{
+  "name": "jeeny",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Jeeny.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pavelseps/Jeeny.git"
+  },
+  "author": "Pavel Šeps",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pavelseps/Jeeny/issues"
+  },
+  "homepage": "https://github.com/pavelseps/Jeeny#readme",
+  "devDependencies": {
+    "copy-paste": "^1.1.4",
+    "open": "0.0.5"
+  },
+  "dependencies": {
+    "copy-paste": "^1.1.4",
+    "open": "0.0.5"
+  }
+}
