@@ -12,3 +12,4 @@ nbproject/
 
 # Variables
 import/variables.local.js
+node_modules/
