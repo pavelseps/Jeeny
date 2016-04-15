@@ -54,6 +54,7 @@ var commandsList = [
     ["chci pracovat", "Jeeny zapne všechny důležitý programy pro práci", fcPracuj],
     ["testuj prohlizece", "Jeeny otevře web ve všech prohlížečích", fcProhlizece],
     ["lorem ipsum", "Jeeny vloží do clipboardu část Lorem Ipsum textu", fcLorem],
+    ["vhost", "Jeeny otevře soubory pro nastavení virtual hostu", fcVhost],
     ["test", false, fcTest]
 ];
 
@@ -299,6 +300,12 @@ function fcLorem(){
     ncp.copy('Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Duis condimentum augue id magna semper rutrum. In dapibus augue non sapien. Nullam justo enim, consectetuer nec, ullamcorper ac, vestibulum in, elit. Etiam posuere lacus quis dolor. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Nullam feugiat, turpis at pulvinar vulputate, erat libero tristique tellus, nec bibendum odio risus sit amet ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Curabitur sagittis hendrerit ante. Integer imperdiet lectus quis justo. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Nullam sapien sem, ornare ac, nonummy non, lobortis a enim. Nullam justo enim, consectetuer nec, ullamcorper ac, vestibulum in, elit. Nullam sapien sem, ornare ac, nonummy non, lobortis a enim.', function () {
         JeenySays("Lorem Ipsum je vloženo do clipboardu.");
     })
+}
+function fcVhost() {
+    cp.exec(httpd_vhosts);
+    JeenySays("Otevírám soubor httpd-vhosts.");
+    open(win_host);
+    JeenySays("Otevírám složku s hosts.");
 }
 
 /**

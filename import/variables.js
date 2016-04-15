@@ -38,3 +38,11 @@ const zabava = '';
  * file
  */
 const poznamky = "";
+
+/**
+ * fcVhost()
+ * httpd_vhosts = file
+ * win_host = folder
+ */
+const httpd_vhosts = "C:\\wamp\\bin\\apache\\apache2.4.9\\conf\\extra\\httpd-vhosts.conf";
+const win_host = "C:\\Windows\\System32\\drivers\\etc";
