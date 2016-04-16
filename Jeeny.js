@@ -29,6 +29,7 @@ fs.access('.\\import\\variables.local.js', fs.F_OK, function(err) {
         include('./import/variables.local.js');
     }else{
         include('./import/variables.js');
+        JeenySays("Prosím, vytvoř si soubr \"import/variables.local.js\", ať jsem 100% funkční.");
     }
 });
 
@@ -36,10 +37,13 @@ fs.access('.\\import\\variables.local.js', fs.F_OK, function(err) {
 /**
  * List of commands
  * For not show in help use false on "help info"
+ * Write commands only lower case
  */
 var commandsList = [
     ["pomoc", false, fcPomoc],
     ["baf", false, fcBaf],
+    ["man", false, fcKeepCalm],
+    ["me jebne", false, fcKeepCalm],
     ["konec", "ukončíš Jeeny", fcKonec],
     ["novy projekt", "Jeeny vytvoří nový projekt", fcNovyProjekt],
     ["pozdrav", "Jeeny tě pozdraví", fcPozdrav],
@@ -56,7 +60,8 @@ var commandsList = [
     ["lorem ipsum", "Jeeny vloží do clipboardu část Lorem Ipsum textu", fcLorem],
     ["vhost", "Jeeny otevře soubory pro nastavení virtual hostu", fcVhost],
     ["wiki", "Jeeny otevře Websta wiki", fcWiki],
-    ["test", false, fcTest]
+    ["viewport", "Jeeny ti dá do clipboardu metatagu viewport.", fcViewport],
+    ["test", false, fcTest]     //Function for testing
 ];
 
 /**
@@ -68,7 +73,7 @@ function startJeeny(){
     ncp = require("copy-paste");
     JeenySays("Ahoj, co pak si přeješ?");
     rl.on('line', function(line) {
-        mainCycle(line.toString().trim());
+        mainCycle(line.toString().trim().toLowerCase());
     });
 }
 function mainCycle(readedInput){
@@ -100,10 +105,29 @@ function callCommand(command){
         }
     }
 }
+function askNodeModules() {
+    rl.question('Přeješ si je doinstalovat: ', function(line) {
+        if(line=="ano"){
+            JeenySays("Dobře, já je doinstaluji.");
+            cp.execSync('npm install');
+            JeenySays("Nainstalováno, už můžu fungovat!");
+            startJeeny();
+        }else if(line=="ne"){
+            JeenySays("Bez nich nemohu fungovat..");
+            fcKonec();
+        }else{
+            JeenySays("Prosím, odpověz ano/ne");
+            askNodeModules();
+        }
+    });
+}
 
 /**
  * Functions for commands
  */
+function fcTest(){
+    console.log("aktualně nemám co testovat");
+}
 function fcPomoc(){
     JeenySays();
     for(var i = 0; i<commandsList.length; i++){
@@ -302,9 +326,6 @@ function fcProhlizece(){
         JeenySays("Všechny prohlížeče se otevírají.");
     });
 }
-function fcTest(){
-    console.log("aktualně nemám co testovat");
-}
 function fcLorem(){
     ncp.copy('Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Duis condimentum augue id magna semper rutrum. In dapibus augue non sapien. Nullam justo enim, consectetuer nec, ullamcorper ac, vestibulum in, elit. Etiam posuere lacus quis dolor. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Nullam feugiat, turpis at pulvinar vulputate, erat libero tristique tellus, nec bibendum odio risus sit amet ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Curabitur sagittis hendrerit ante. Integer imperdiet lectus quis justo. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Nullam sapien sem, ornare ac, nonummy non, lobortis a enim. Nullam justo enim, consectetuer nec, ullamcorper ac, vestibulum in, elit. Nullam sapien sem, ornare ac, nonummy non, lobortis a enim.', function () {
         JeenySays("Lorem Ipsum je vloženo do clipboardu.");
@@ -320,6 +341,14 @@ function fcWiki() {
     open('http://wiki.websta.cz/');
     JeenySays("Otevírám Websta wiki.");
 }
+function fcViewport() {
+    ncp.copy('<meta name="viewport" content="width=device-width, initial-scale=1">', function () {
+        JeenySays("Metatag je vložen do clipboardu.");
+    })
+}
+function fcKeepCalm() {
+    JeenySays("Zvedni se, udělej si kafe a pokračuj hezky v klidu.");
+}
 
 /**
  * Main
@@ -329,21 +358,4 @@ if(fs.existsSync("./node_modules")){
 }else{
     JeenySays("Vidím že ještě nemáš moduly pro node.js");
     askNodeModules();
-
-    function askNodeModules() {
-        rl.question('Přeješ si je doinstalovat: ', function(line) {
-            if(line=="ano"){
-                JeenySays("Dobře, já je doinstaluji.");
-                cp.execSync('npm install');
-                JeenySays("Nainstalováno, už můžu fungovat!");
-                startJeeny();
-            }else if(line=="ne"){
-                JeenySays("Bez nich nemohu fungovat..");
-                fcKonec();
-            }else{
-                JeenySays("Prosím, odpověz ano/ne");
-                askNodeModules();
-            }
-        });
-    }
 }

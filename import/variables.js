@@ -6,38 +6,38 @@
 
 //programs for work
 var programsForWork = [
-    ["Test program", "C:\\myprogram.exe", false]
+    ["Test program", "C:\\myProgram.exe", false]
 ];
 
 /**
  * root folder for projects
  * folder
  */
-const rootProjectDir = "";
+const rootProjectDir = "C:\\myProjects";
 
 /**
  * fcZpravy()
  * url
  */
-const zpravy = '';
+const zpravy = 'http://www.myNews.com/';
 
 /**
  * fcJira()
  * url
  */
-const jira = '';
+const jira = 'https://www.atlassian.com/software/jira';
 
 /**
  * fcZabava()
  * url
  */
-const zabava = '';
+const zabava = 'https://www.myFunyPage.com/';
 
 /**
  * fcPoznamky()
  * file
  */
-const poznamky = "";
+const poznamky = "C:\\myNotes.txt";
 
 /**
  * fcVhost()
