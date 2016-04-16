@@ -60,7 +60,7 @@ var commandsList = [
     ["lorem ipsum", "Jeeny vloží do clipboardu část Lorem Ipsum textu", fcLorem],
     ["vhost", "Jeeny otevře soubory pro nastavení virtual hostu", fcVhost],
     ["wiki", "Jeeny otevře Websta wiki", fcWiki],
-    ["viewport", "Jeeny ti dá do clipboardu metatagu viewport.", fcViewport],
+    ["viewport", "Jeeny ti dá do clipboardu metatagu viewport", fcViewport],
     ["test", false, fcTest]     //Function for testing
 ];
 
