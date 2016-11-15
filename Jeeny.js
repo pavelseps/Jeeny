@@ -127,6 +127,8 @@ function askNodeModules() {
  */
 function fcTest(){
     console.log("aktualně nemám co testovat");
+    open('cmd /k net stop wampapache64');
+    open('cmd /k net start wampapache64');
 }
 function fcPomoc(){
     JeenySays();
@@ -147,8 +149,10 @@ function fcKonec(){
 }
 function fcNovyProjekt(){
     var dir;
+    var name;
     JeenySays("Jak se má jmenovat nový projekt?");
     rl.question('Jmeno:  ', function(line) {
+        name = line;
         dir = rootProjectDir  + line;
         if (!fs.existsSync(dir)){
             fs.mkdirSync(dir);
@@ -169,12 +173,34 @@ function fcNovyProjekt(){
         rl.question('ano/ne: ', function(line) {
             if(line=="ano"){
                 open(dir);
-                JeenySays("Dobře, otevírám složku s projektem");
+                JeenySays("Dobře, otevírám složku s projektem.");
+                JeenySays("Přeješ si vytvořit virual host?");
+                askForVhost();
+            }else if(line=="ne"){
+                JeenySays("Přeješ si vytvořit virual host?");
+                askForVhost();
+            }else{
+                JeenySays("Prosím, odpověz ano/ne");
+                askForOpenDir();
+            }
+        });
+    }
+
+    function askForVhost(){
+        rl.question('ano/ne: ', function(line) {
+            if(line=="ano"){
+                fs.appendFile(win_host, '127.0.0.1       '+name+'.dev\r\n', function (err) {
+
+                });
+                fs.appendFile(httpd_vhosts, '<VirtualHost *:80>\r\n    DocumentRoot "'+dir+'\\web"\r\n    ServerName '+name+'.dev\r\n</VirtualHost>\r\n\r\n', function (err) {
+
+                });
+                JeenySays("Prosím restartuj wampserver");
             }else if(line=="ne"){
                 JeenySays("Dobře, co dalšího si přeješ?");
             }else{
                 JeenySays("Prosím, odpověz ano/ne");
-                askForOpenDir();
+                askForVhost();
             }
         });
     }
